@@ -1,2 +1,6 @@
 hello.zip
-**/libs/**
+*/libs/**
+*.class
+*.iml
+*/.idea/**
+*/.lift/**
