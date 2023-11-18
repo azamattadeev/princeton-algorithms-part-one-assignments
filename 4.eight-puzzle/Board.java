@@ -1,14 +1,26 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Board {
     private int[][] tiles;
     private int n;
+    private int zY; // y coordinate of 0 tile
+    private int zX; // x coordinate of 0 tile
 
     // create a board from an n-by-n array of tiles,
     // where tiles[row][col] = tile at (row, col)
     public Board(int[][] tiles) {
         this.tiles = deepCopy(tiles);
         n = tiles.length;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (this.tiles[i][j] == 0) {
+                    zY = i;
+                    zX = j;
+                }
+            }
+        }
     }
 
     // string representation of this board
@@ -26,7 +38,7 @@ public class Board {
 
     // board dimension n
     public int dimension() {
-        return 0;
+        return n;
     }
 
     // number of tiles out of place
@@ -59,7 +71,7 @@ public class Board {
 
     // is this board the goal board?
     public boolean isGoal() {
-        return false;
+        return (hamming() == 0);
     }
 
     // does this board equal y?
@@ -74,7 +86,32 @@ public class Board {
 
     // all neighboring boards
     public Iterable<Board> neighbors() {
-        return null;
+        List<Board> neighbors = new ArrayList<>(4);
+        List<int[]> slideCoords = new ArrayList<>(4);
+
+        if (zY > 0) slideCoords.add(new int[] { zY - 1, zX });
+        if (zY < n - 1) slideCoords.add(new int[] { zY + 1, zX });
+        if (zX > 0) slideCoords.add(new int[] { zY, zX - 1 });
+        if (zX < n - 1) slideCoords.add(new int[] { zY, zX + 1 });
+
+        for (int[] slideFrom : slideCoords) {
+            // Swap two tiles in original tiles[][] array
+            // It's need to avoid using extra memory because Board() constructor creates copy of argument array.
+
+            int p = tiles[zY][zX];
+            tiles[zY][zX] = tiles[slideFrom[0]][slideFrom[1]];
+            tiles[slideFrom[0]][slideFrom[1]] = p;
+
+            // create neighbor Board
+            neighbors.add(new Board(tiles));
+
+            // swap back in original tiles[][] array
+            p = tiles[zY][zX];
+            tiles[zY][zX] = tiles[slideFrom[0]][slideFrom[1]];
+            tiles[slideFrom[0]][slideFrom[1]] = p;
+        }
+
+        return neighbors;
     }
 
     // a board that is obtained by exchanging any pair of tiles
