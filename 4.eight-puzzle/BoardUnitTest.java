@@ -95,27 +95,27 @@ public class BoardUnitTest {
 
     @Test
     public void hammingTest() {
-        assertEquals(4, new Board(deepCopy(NOT_GOAL_1)).hamming());
+        assertEquals(4, new Board(NOT_GOAL_1).hamming());
     }
 
     @Test
     public void hammingGoalTest() {
-        assertEquals(0, new Board(deepCopy(GOAL)).hamming());
+        assertEquals(0, new Board(GOAL).hamming());
     }
 
     @Test
     public void manhattanNotGoalTest1() {
-        assertEquals(3, new Board(deepCopy(NOT_GOAL_1)).manhattan());
+        assertEquals(3, new Board(NOT_GOAL_1).manhattan());
     }
 
     @Test
     public void manhattanNotGoalTest2() {
-        assertEquals(10, new Board(deepCopy(NOT_GOAL_2)).manhattan());
+        assertEquals(10, new Board(NOT_GOAL_2).manhattan());
     }
 
     @Test
     public void manhattanGoalTest() {
-        assertEquals(0, new Board(deepCopy(GOAL)).manhattan());
+        assertEquals(0, new Board(GOAL).manhattan());
     }
 
     @Test
@@ -158,16 +158,6 @@ public class BoardUnitTest {
         for (int[][] neighborTiles : expectedNeighborsArray) {
             assertTrue(neighborsList.contains(new Board(neighborTiles)));
         }
-    }
-
-    private int[][] deepCopy(int[][] tiles) {
-        int[][] copy = new int[tiles.length][tiles.length];
-        for (int i = 0; i < tiles.length; i++) {
-            for (int j = 0; j < tiles.length; j++) {
-                copy[i][j] = tiles[i][j];
-            }
-        }
-        return copy;
     }
 
 }
