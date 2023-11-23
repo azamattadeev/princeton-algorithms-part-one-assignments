@@ -48,6 +48,7 @@ public class Board {
         if (hamming != -1) {
             return hamming;
         }
+        hamming = 0;
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -66,6 +67,7 @@ public class Board {
         if (manhattan != -1) {
             return manhattan;
         }
+        manhattan = 0;
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
