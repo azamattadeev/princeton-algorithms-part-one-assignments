@@ -7,6 +7,8 @@ public class Board {
     private int n;
     private int zY; // y coordinate of 0 tile
     private int zX; // x coordinate of 0 tile
+    private int hamming = -1;
+    private int manhattan = -1;
 
     // create a board from an n-by-n array of tiles,
     // where tiles[row][col] = tile at (row, col)
@@ -43,7 +45,10 @@ public class Board {
 
     // number of tiles out of place
     public int hamming() {
-        int hamming = 0;
+        if (hamming != -1) {
+            return hamming;
+        }
+
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if (isLastTile(i, j) && (tiles[i][j] != 0)
@@ -52,12 +57,16 @@ public class Board {
                 }
             }
         }
+
         return hamming;
     }
 
     // sum of Manhattan distances between tiles and goal
     public int manhattan() {
-        int manhattan = 0;
+        if (manhattan != -1) {
+            return manhattan;
+        }
+
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if (tiles[i][j] != 0) {
@@ -66,6 +75,7 @@ public class Board {
                 }
             }
         }
+
         return manhattan;
     }
 
