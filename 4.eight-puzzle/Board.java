@@ -7,8 +7,6 @@ public class Board {
     private int n;
     private int zY; // y coordinate of 0 tile
     private int zX; // x coordinate of 0 tile
-    private int hamming = -1;
-    private int manhattan = -1;
 
     // create a board from an n-by-n array of tiles,
     // where tiles[row][col] = tile at (row, col)
@@ -45,15 +43,11 @@ public class Board {
 
     // number of tiles out of place
     public int hamming() {
-        if (hamming != -1) {
-            return hamming;
-        }
-        hamming = 0;
-
+        int hamming = 0;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                if (isLastTile(i, j) && (tiles[i][j] != 0)
-                        || !isLastTile(i, j) && tiles[i][j] != i * n + j + 1) {
+                if (!isLastTile(i, j) && tiles[i][j] != 0 && tiles[i][j] != i * n + j + 1
+                        || isLastTile(i, j) && (tiles[i][j] != 0)) {
                     hamming++;
                 }
             }
@@ -64,11 +58,7 @@ public class Board {
 
     // sum of Manhattan distances between tiles and goal
     public int manhattan() {
-        if (manhattan != -1) {
-            return manhattan;
-        }
-        manhattan = 0;
-
+        int manhattan = 0;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if (tiles[i][j] != 0) {
@@ -152,17 +142,6 @@ public class Board {
 
     private boolean isLastTile(int i, int j) {
         return (i == n - 1) && (j == n - 1);
-    }
-
-    // unit testing (not graded)
-    public static void main(String[] args) {
-        int[][] tiles = {
-                { 1, 0, 3 },
-                { 4, 2, 5 },
-                { 7, 8, 6 }
-        };
-
-        System.out.println(new Board(tiles));
     }
 
     private static int[][] deepCopy(int[][] tiles) {

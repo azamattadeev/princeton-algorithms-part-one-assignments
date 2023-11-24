@@ -14,7 +14,7 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 public class BoardUnitTest {
-    // hamming = 4, manhattan = 3
+    // hamming = 3, manhattan = 3
     private static final int[][] NOT_GOAL_1 = {
             { 1, 0, 3 },
             { 4, 2, 5 },
@@ -95,7 +95,7 @@ public class BoardUnitTest {
 
     @Test
     public void hammingTest() {
-        assertEquals(4, new Board(NOT_GOAL_1).hamming());
+        assertEquals(3, new Board(NOT_GOAL_1).hamming());
     }
 
     @Test
