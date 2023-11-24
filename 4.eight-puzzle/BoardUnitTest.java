@@ -160,4 +160,10 @@ public class BoardUnitTest {
         }
     }
 
+    @Test
+    public void twinTest() {
+        Board goalBoard = new Board(GOAL);
+        assertEquals(2, goalBoard.twin().hamming());
+    }
+
 }

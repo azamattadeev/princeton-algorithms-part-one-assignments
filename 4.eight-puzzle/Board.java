@@ -107,20 +107,16 @@ public class Board {
         if (zX < n - 1) slideCoords.add(new int[] { zY, zX + 1 });
 
         for (int[] slideFrom : slideCoords) {
+
             // Swap two tiles in original tiles[][] array
             // It's need to avoid using extra memory because Board() constructor creates copy of argument array.
-
-            int p = tiles[zY][zX];
-            tiles[zY][zX] = tiles[slideFrom[0]][slideFrom[1]];
-            tiles[slideFrom[0]][slideFrom[1]] = p;
+            swapTiles(zY, zX, slideFrom[0], slideFrom[1]);
 
             // create neighbor Board
             neighbors.add(new Board(tiles));
 
             // swap back in original tiles[][] array
-            p = tiles[zY][zX];
-            tiles[zY][zX] = tiles[slideFrom[0]][slideFrom[1]];
-            tiles[slideFrom[0]][slideFrom[1]] = p;
+            swapTiles(zY, zX, slideFrom[0], slideFrom[1]);
         }
 
         return neighbors;
@@ -128,7 +124,30 @@ public class Board {
 
     // a board that is obtained by exchanging any pair of tiles
     public Board twin() {
-        return null;
+        Board twin;
+        if (tiles[0][0] == 0) {
+            swapTiles(0, 1, 1, 0);
+            twin = new Board(tiles);
+            swapTiles(0, 1, 1, 0);
+        }
+        else if (tiles[0][1] == 0) {
+            swapTiles(0, 0, 1, 0);
+            twin = new Board(tiles);
+            swapTiles(0, 0, 1, 0);
+        }
+        else {
+            swapTiles(0, 0, 0, 1);
+            twin = new Board(tiles);
+            swapTiles(0, 0, 0, 1);
+        }
+
+        return twin;
+    }
+
+    private void swapTiles(int y1, int x1, int y2, int x2) {
+        int p = tiles[y1][x1];
+        tiles[y1][x1] = tiles[y2][x2];
+        tiles[y2][x2] = p;
     }
 
     private boolean isLastTile(int i, int j) {
